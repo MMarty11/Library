@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="MyLMS.Views.UserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyLMS.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Indietro -->
+            <RowDefinition Height="Auto"/>
+            <!-- Ricerca -->
+            <RowDefinition Height="*"/>
+            <!-- Lista utenti -->
+            <RowDefinition Height="Auto"/>
+            <!-- Dettagli / Azioni -->
+        </Grid.RowDefinitions>
+
+        <!-- Pulsante Indietro -->
+        <Button Grid.Row="0"
+                Content="← Indietro"
+                HorizontalAlignment="Left"
+                Padding="10,2"
+                Margin="0,0,0,10"
+                Click="BackButton_Click"/>
+
+        <!-- Barra di ricerca -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Cerca utente:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,5,0"/>
+            <TextBox Width="250"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Cerca"
+                    Margin="10,0,0,0"
+                    Padding="10,2"
+                    Command="{Binding SearchCommand}" />
+            <Button Content="Mostra tutti"
+                    Margin="10,0,0,0"
+                    Padding="10,2"
+                    Command="{Binding LoadAllCommand}" />
+        </StackPanel>
+
+        <!-- Elenco utenti -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Users}"
+                  SelectedItem="{Binding SelectedUser}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nome completo"
+                                    Binding="{Binding FullName}"
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Email"
+                                    Binding="{Binding Email}"
+                                    Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Dettagli utente selezionato / nuovo utente -->
+        <GroupBox Grid.Row="3" Header="Dettagli utente">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Nome completo -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Nome completo:"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,0,10,5"/>
+
+                <!-- Email -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Email:"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,5"/>
+                <TextBox Grid.Row="1" Grid.Column="1"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,0,10,5"/>
+
+                <!-- Pulsanti azione -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,10,0,0">
+                    <Button Content="Nuovo"
+                            Margin="0,0,10,0"
+                            Padding="10,2"
+                            Command="{Binding NewCommand}"/>
+                    <Button Content="Elimina"
+                            Margin="0,0,10,0"
+                            Padding="10,2"
+                            Command="{Binding DeleteCommand}"/>
+                    <Button Content="Salva"
+                            Padding="10,2"
+                            Command="{Binding SaveCommand}"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

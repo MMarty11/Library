@@ -1,0 +1,17 @@
+﻿<Window x:Class="Biblioteca.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biblioteca"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="#FFD25B00">
+    <Grid>
+        <Button x:Name="btnAddBook" Content="ADD BOOK" HorizontalAlignment="Center" Height="46" Margin="0,80,0,0" VerticalAlignment="Top" Width="193" Click="btnAddBook_Click"/>
+        <Button x:Name="btnSearch" Content="SEARCH" HorizontalAlignment="Center" Height="46" Margin="0,150,0,0" VerticalAlignment="Top" Width="193"/>
+        <Button x:Name="btnBorrow" Content="BORROW" HorizontalAlignment="Center" Height="46" Margin="0,220,0,0" VerticalAlignment="Top" Width="193"/>
+        <Button x:Name="btnReturn" Content="RETURN" HorizontalAlignment="Center" Height="46" Margin="0,290,0,0" VerticalAlignment="Top" Width="193"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Biblioteca" FontSize="40" VerticalAlignment="Top" Margin="0,10,0,0"/>
+
+    </Grid>
+</Window>
