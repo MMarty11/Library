@@ -17,6 +17,8 @@
             <!-- Lista utenti -->
             <RowDefinition Height="Auto"/>
             <!-- Dettagli / Azioni -->
+            <RowDefinition Height="Auto"/>
+            <!-- Messaggio -->
         </Grid.RowDefinitions>
 
         <!-- Pulsante Indietro -->
@@ -113,5 +115,11 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
+        
+        <!-- Messaggio -->
+        <TextBlock Grid.Row="4"
+                   Text="{Binding Message}"
+                   Foreground="Red"
+                   Margin="0,5,0,0"/>
     </Grid>
 </UserControl>

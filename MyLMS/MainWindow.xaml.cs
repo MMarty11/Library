@@ -18,11 +18,9 @@ namespace MyLMS
     public partial class MainWindow : Window
     {
         // Inizializzo una sola istanza per view (così il loro stato rimane finché l'app è aperta)
-        private readonly AddBookView _addBookView = new AddBookView();
         private readonly SearchBooksView _searchBookView = new SearchBooksView();
         private readonly UserView _userView = new UserView();
         private readonly LoanView _loansView = new LoanView();
-        private readonly ReturnView _returnView = new ReturnView();
 
         public MainWindow()
         {
@@ -47,11 +45,6 @@ namespace MyLMS
 
         // Gestori dei pulsanti del menu
 
-        private void AddBookButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowView(_addBookView);
-        }
-
         private void SearchBookButton_Click(object sender, RoutedEventArgs e)
         {
             ShowView(_searchBookView);
@@ -65,11 +58,6 @@ namespace MyLMS
         private void LoansButton_Click(object sender, RoutedEventArgs e)
         {
             ShowView(_loansView);
-        }
-
-        private void ReturnButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowView(_returnView);
         }
     }
 }

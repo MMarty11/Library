@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>  <!-- Riga per pulsante Indietro -->
             <RowDefinition Height="Auto"/>  <!-- Nuovo prestito -->
+            <RowDefinition Height="Auto"/>  <!-- Ricerca-->
             <RowDefinition Height="*"/>  <!-- Prestiti attivi -->
         </Grid.RowDefinitions>
 
@@ -67,8 +68,27 @@
             </Grid>
         </GroupBox>
 
+        <!-- Barra di ricerca -->
+        <StackPanel Grid.Row="2"
+             Orientation="Horizontal"
+             Margin="0,0,0,10">
+            <TextBlock Text="Cerca prestito:"
+                VerticalAlignment="Center"
+                Margin="0,0,5,0"/>
+            <TextBox Width="250"
+              Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Cerca"
+             Margin="10,0,0,0"
+             Padding="10,2"
+             Command="{Binding SearchCommand}"/>
+            <Button Content="Mostra tutti"
+             Margin="10,0,0,0"
+             Padding="10,2"
+             Command="{Binding LoadAllCommand}"/>
+        </StackPanel>
+
         <!-- Sezione prestiti attivi -->
-        <GroupBox Grid.Row="2" Header="Prestiti attivi" Margin="0,10,0,0">
+        <GroupBox Grid.Row="3" Header="Prestiti attivi" Margin="0,10,0,0">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
