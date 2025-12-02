@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="MyLMS.Views.ReturnView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyLMS.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Riga per pulsante Indietro -->
+            <RowDefinition Height="Auto"/>
+            <!-- Barra ricerca -->
+            <RowDefinition Height="*"/>
+            <!-- Lista prestiti -->
+            <RowDefinition Height="Auto"/>
+            <!-- Pulsanti -->
+        </Grid.RowDefinitions>
+
+        <!-- Pulsante Indietro -->
+        <Button Grid.Row="0"
+          Content="← Indietro"
+          HorizontalAlignment="Left"
+          Padding="10,2"
+          Margin="0,0,0,10"
+          Click="BackButton_Click"/>
+
+        <!-- Barra di ricerca -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Cerca prestito:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,5,0"/>
+            <TextBox Width="250"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Cerca"
+                    Margin="10,0,0,0"
+                    Padding="10,2"
+                    Command="{Binding SearchCommand}"/>
+            <Button Content="Mostra tutti"
+                    Margin="10,0,0,0"
+                    Padding="10,2"
+                    Command="{Binding LoadAllCommand}"/>
+        </StackPanel>
+
+        <!-- Elenco prestiti attivi -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding ActiveLoans}"
+                  SelectedItem="{Binding SelectedLoan}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Utente"
+                                    Binding="{Binding User.FullName}"
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Libro"
+                                    Binding="{Binding Book.Title}"
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Autore"
+                                    Binding="{Binding Book.Author}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Data prestito"
+                                    Binding="{Binding LoanDate, StringFormat=\{0:dd/MM/yyyy HH:mm\}}"
+                                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Pulsante restituzione -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Restituisci selezionato"
+                    Padding="10,2"
+                    Command="{Binding ReturnCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

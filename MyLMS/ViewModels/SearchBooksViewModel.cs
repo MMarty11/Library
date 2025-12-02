@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using Biblioteca.Models;
-using Microsoft.EntityFrameworkCore;
 using MyLMS.Data;
 using MyLMS.Utils;
 
@@ -22,20 +21,12 @@ namespace MyLMS.ViewModels
 
             SearchCommand = new RelayCommand(SearchBooks);
             LoadAllCommand = new RelayCommand(LoadAllBooks);
-            NewBookCommand = new RelayCommand(NewBook, CanAdd);
             SaveCommand = new RelayCommand(SaveChanges, CanSave);
             DeleteCommand = new RelayCommand(DeleteBook, CanDelete);
-
-            Message = string.Empty;
 
             // Carica tutti i libri all'avvio
             LoadAllBooks();
         }
-
-
-        // --------- Collezioni ---------
-
-        public ObservableCollection<Book> Books { get; }
 
         // --------- Proprietà bindate alla View ---------
 
@@ -50,6 +41,8 @@ namespace MyLMS.ViewModels
             }
         }
 
+        public ObservableCollection<Book> Books { get; }
+
         private Book? _selectedBook;
         public Book? SelectedBook
         {
@@ -59,75 +52,17 @@ namespace MyLMS.ViewModels
                 _selectedBook = value;
                 OnPropertyChanged();
 
-                if (value != null)
-                {
-                    Title = value.Title;
-                    Author = value.Author;
-                    Isbn = value.Isbn;
-                    Year = value.Year.ToString();
-                }
-
                 (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
                 (DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
-        private string _title = "";
-        public string Title
-        {
-            get => _title;
-            set
-            {
-                _title = value;
-                OnPropertyChanged();
-                if(SelectedBook != null) (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (NewBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
-            }
-        }
-
-        private string _author = "";
-        public string Author
-        {
-            get => _author;
-            set
-            {
-                _author = value;
-                OnPropertyChanged();
-                if(SelectedBook != null) (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (NewBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
-            }
-        }
-
-        private string _isbn = string.Empty;
-        public string Isbn
-        {
-            get => _isbn;
-            set { _isbn = value; OnPropertyChanged(); }
-        }
-
-        private string _year = string.Empty;
-        public string Year
-        {
-            get => _year;
-            set { _year = value; OnPropertyChanged(); }
-        }
-
-        private string _message = string.Empty;
-        public string Message
-        {
-            get => _message;
-            set { _message = value; OnPropertyChanged(); }
-        }
-
-
         // --------- Comandi ---------
 
         public ICommand SearchCommand { get; }
         public ICommand LoadAllCommand { get; }
-        public ICommand NewBookCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
-
 
         // --------- Metodi ---------
 
@@ -140,9 +75,6 @@ namespace MyLMS.ViewModels
 
             foreach (var book in query)
                 Books.Add(book);
-
-            SelectedBook = null;
-            Message = string.Empty;
         }
 
         private void SearchBooks()
@@ -164,80 +96,17 @@ namespace MyLMS.ViewModels
 
             foreach (var book in query.OrderBy(b => b.Title))
                 Books.Add(book);
-
-            SelectedBook = null;
-            Message = string.Empty;
-        }
-
-        private bool CanAdd()
-        {
-            return !string.IsNullOrWhiteSpace(Title)
-                && !string.IsNullOrWhiteSpace(Author);
-        }
-
-        private void NewBook()
-        {
-            //Message = "Nuovo libro: compila i campi e premi Salva.";
-
-            int parsedYear = 0;
-            if (!string.IsNullOrWhiteSpace(Year))
-            {
-                int.TryParse(Year, out parsedYear);
-            }
-
-            var book = new Book
-            {
-                Title = Title,
-                Author = Author,
-                Isbn = Isbn,
-                Year = parsedYear,
-                IsAvailable = true
-            };
-
-            // Lo aggiungo solo alla lista in memoria;
-            // lo stato "Added" per EF si applica al SaveChanges (facendo Attach/Add).
-            _context.Books.Add(book); // EF lo traccia come Added
-            Books.Add(book);
-            SelectedBook = book;
         }
 
         private bool CanSave() => SelectedBook != null;
-        /*private bool CanSave()
-        {
-            return !string.IsNullOrWhiteSpace(Title)
-                && !string.IsNullOrWhiteSpace(Author);
-        }*/
 
         private void SaveChanges()
         {
-            if (SelectedBook == null)
-                return;
+            // I Book in Books sono tracciati da EF, qui basta salvare
+            _context.SaveChanges();
 
-            // Validazione minima
-            if (string.IsNullOrWhiteSpace(SelectedBook.Title) ||
-                string.IsNullOrWhiteSpace(SelectedBook.Author))
-            {
-                Message = "Titolo e Autore sono obbligatori.";
-                return;
-            }
-
-            bool isNew = SelectedBook.Id == 0; // se 0, verrà creato al SaveChanges
-
-            try
-            {
-                _context.SaveChanges();
-
-                Message = isNew
-                    ? "Libro aggiunto correttamente."
-                    : "Libro aggiornato correttamente.";
-
-                // ricarico i risultati secondo il filtro corrente
-                SearchBooks();
-            }
-            catch (DbUpdateException ex)
-            {
-                Message = "Errore nel salvataggio: " + ex.Message;
-            }
+            // Aggiorno la lista secondo il filtro corrente
+            SearchBooks();
         }
 
         private bool CanDelete() => SelectedBook != null;
@@ -247,22 +116,11 @@ namespace MyLMS.ViewModels
             if (SelectedBook == null)
                 return;
 
-            // opzionale ma consigliato: impedire eliminazione se il libro ha prestiti attivi
-            bool hasActiveLoans = _context.Loans
-                .Any(l => l.BookId == SelectedBook.Id && l.ReturnDate == null);
-
-            if (hasActiveLoans)
-            {
-                Message = "Impossibile eliminare il libro: ha prestiti attivi.";
-                return;
-            }
-
             _context.Books.Remove(SelectedBook);
             _context.SaveChanges();
 
             Books.Remove(SelectedBook);
             SelectedBook = null;
-            Message = "Libro eliminato.";
         }
     }
 }

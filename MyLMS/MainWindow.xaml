@@ -20,7 +20,12 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,20"/>
 
-                <Button Content="Gestione libri"
+                <Button Content="Aggiungi libro"
+                        Margin="0,0,0,10"
+                        Padding="10"
+                        Click="AddBookButton_Click"/>
+
+                <Button Content="Cerca / Modifica libri"
                         Margin="0,0,0,10"
                         Padding="10"
                         Click="SearchBookButton_Click"/>
@@ -34,6 +39,11 @@
                         Margin="0,0,0,10"
                         Padding="10"
                         Click="LoansButton_Click"/>
+
+                <Button Content="Restituzione libri"
+                        Margin="0,0,0,10"
+                        Padding="10"
+                        Click="ReturnButton_Click"/>
             </StackPanel>
         </Grid>
 
