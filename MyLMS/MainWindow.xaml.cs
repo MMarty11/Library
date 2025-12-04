@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyLMS.Views;
+using MyLMS.MVVM.Views;
 
 namespace MyLMS
 {
@@ -18,11 +18,9 @@ namespace MyLMS
     public partial class MainWindow : Window
     {
         // Inizializzo una sola istanza per view (così il loro stato rimane finché l'app è aperta)
-        private readonly AddBookView _addBookView = new AddBookView();
-        private readonly SearchBooksView _searchBookView = new SearchBooksView();
-        private readonly UserView _userView = new UserView();
-        private readonly LoanView _loansView = new LoanView();
-        private readonly ReturnView _returnView = new ReturnView();
+        private readonly BooksView _searchBookView = new BooksView();
+        private readonly UsersView _userView = new UsersView();
+        private readonly LoansView _loansView = new LoansView();
 
         public MainWindow()
         {
@@ -30,7 +28,7 @@ namespace MyLMS
         }
 
         // Mostra una certa view al posto del menu
-        private void ShowView(FrameworkElement view)
+        /*private void ShowView(FrameworkElement view)
         {
             MainMenuPanel.Visibility = Visibility.Collapsed;
             ContentArea.Visibility = Visibility.Visible;
@@ -47,11 +45,6 @@ namespace MyLMS
 
         // Gestori dei pulsanti del menu
 
-        private void AddBookButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowView(_addBookView);
-        }
-
         private void SearchBookButton_Click(object sender, RoutedEventArgs e)
         {
             ShowView(_searchBookView);
@@ -65,11 +58,6 @@ namespace MyLMS
         private void LoansButton_Click(object sender, RoutedEventArgs e)
         {
             ShowView(_loansView);
-        }
-
-        private void ReturnButton_Click(object sender, RoutedEventArgs e)
-        {
-            ShowView(_returnView);
-        }
+        }*/
     }
 }

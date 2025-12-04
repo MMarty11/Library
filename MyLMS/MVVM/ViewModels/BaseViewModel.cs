@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MyLMS.ViewModels
+namespace MyLMS.MVVM.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

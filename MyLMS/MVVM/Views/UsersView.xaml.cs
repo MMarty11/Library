@@ -10,24 +10,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyLMS.ViewModels;
+using MyLMS.MVVM.ViewModels;
 
-namespace MyLMS.Views
+namespace MyLMS.MVVM.Views
 {
     /// <summary>
-    /// Logica di interazione per SearchBooksView.xaml
+    /// Logica di interazione per UserView.xaml
     /// </summary>
-    public partial class SearchBooksView : UserControl
+    public partial class UsersView : UserControl
     {
-        public SearchBooksView()
+        public UsersView()
         {
             InitializeComponent();
-            DataContext = new SearchBooksViewModel();
+            DataContext = new UsersViewModel();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Chiama il metodo pubblico della MainWindow
             if (Application.Current.MainWindow is MainWindow main)
             {
                 main.ShowMainMenu();
