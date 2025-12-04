@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Biblioteca.Models
+namespace MyLMS.MVVM.Models
 {
     internal class User
     {

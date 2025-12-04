@@ -10,19 +10,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyLMS.ViewModels;
+using MyLMS.MVVM.ViewModels;
 
-namespace MyLMS.Views
+namespace MyLMS.MVVM.Views
 {
     /// <summary>
-    /// Logica di interazione per AddBookView.xaml
+    /// Logica di interazione per SearchBooksView.xaml
     /// </summary>
-    public partial class AddBookView : UserControl
+    public partial class BooksView : UserControl
     {
-        public AddBookView()
+        public BooksView()
         {
             InitializeComponent();
-            DataContext = new AddBookViewModel();
+            DataContext = new BooksViewModel();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

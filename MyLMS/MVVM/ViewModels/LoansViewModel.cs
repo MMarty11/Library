@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using Biblioteca.Models;
+using MyLMS.MVVM.Models;
 using Microsoft.EntityFrameworkCore;
 using MyLMS.Data;
-using MyLMS.Utils;
+using MyLMS.Core;
 
-namespace MyLMS.ViewModels
+namespace MyLMS.MVVM.ViewModels
 {
-    internal class LoanViewModel : BaseViewModel
+    internal class LoansViewModel : BaseViewModel
     {
         private readonly LibraryContext _context;
 
-        public LoanViewModel()
+        public LoansViewModel()
         {
             _context = new LibraryContext();
 
@@ -36,6 +36,29 @@ namespace MyLMS.ViewModels
         public ObservableCollection<Loan> ActiveLoans { get; }
 
         // --------- Selezioni correnti ---------
+
+        private string _searchText = string.Empty;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Loan? _selectedLoan;
+        public Loan? SelectedLoan
+        {
+            get => _selectedLoan;
+            set
+            {
+                _selectedLoan = value;
+                OnPropertyChanged();
+                (ReturnBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            }
+        }
 
         private User? _selectedUser;
         public User? SelectedUser
@@ -75,11 +98,56 @@ namespace MyLMS.ViewModels
 
         // --------- Comandi ---------
 
+
+        public ICommand SearchCommand { get; }
+        public ICommand LoadAllCommand { get; }
+
         public ICommand LoanBookCommand { get; }
         public ICommand ReturnBookCommand { get; }
         public ICommand RefreshCommand { get; }
 
         // --------- Logica ---------
+
+        private void LoadAllActiveLoans()
+        {
+            ActiveLoans.Clear();
+
+            var query = _context.Loans
+                                .Include(l => l.Book)
+                                .Include(l => l.User)
+                                .Where(l => l.ReturnDate == null)
+                                .OrderBy(l => l.LoanDate);
+
+            foreach (var loan in query)
+                ActiveLoans.Add(loan);
+        }
+
+        private void SearchLoans()
+        {
+            ActiveLoans.Clear();
+
+            var query = _context.Loans
+                                .Include(l => l.Book)
+                                .Include(l => l.User)
+                                .Where(l => l.ReturnDate == null)
+                                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var text = SearchText.ToLower();
+
+                query = query.Where(l =>
+                    ((l.Book.Title ?? string.Empty).ToLower().Contains(text)) ||
+                    ((l.Book.Author ?? string.Empty).ToLower().Contains(text)) ||
+                    ((l.User.FullName ?? string.Empty).ToLower().Contains(text)) ||
+                    ((l.Book.Isbn ?? string.Empty).ToLower().Contains(text))
+                );
+            }
+
+            foreach (var loan in query.OrderBy(l => l.LoanDate))
+                ActiveLoans.Add(loan);
+        }
+
 
         private void LoadData()
         {

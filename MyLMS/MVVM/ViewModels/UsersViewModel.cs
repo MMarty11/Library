@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using Biblioteca.Models;
+using MyLMS.MVVM.Models;
 using MyLMS.Data;
-using MyLMS.Utils;
+using MyLMS.Core;
 
-namespace MyLMS.ViewModels
+namespace MyLMS.MVVM.ViewModels
 {
-    internal class UserViewModel : BaseViewModel
+    internal class UsersViewModel : BaseViewModel
     {
         private readonly LibraryContext _context;
         private bool _isNewUser = false;
 
-        public UserViewModel()
+        public UsersViewModel()
         {
             _context = new LibraryContext();
 
@@ -26,12 +26,23 @@ namespace MyLMS.ViewModels
             SaveCommand = new RelayCommand(SaveUser, CanSave);
             DeleteCommand = new RelayCommand(DeleteUser, CanDelete);
 
+            Message = string.Empty;
+
             LoadAllUsers();
         }
 
         // --------- Collezione utenti ---------
 
         public ObservableCollection<User> Users { get; }
+
+        // --------- Messaggi utente ---------
+
+        private string _message = string.Empty;
+        public string Message
+        {
+            get => _message;
+            set { _message = value; OnPropertyChanged(); }
+        }
 
         // --------- Ricerca ---------
 
@@ -122,6 +133,7 @@ namespace MyLMS.ViewModels
             SelectedUser = null;
             _isNewUser = false;
             ClearEditingFields();
+            Message = string.Empty;
         }
 
         private void SearchUsers()
@@ -146,6 +158,7 @@ namespace MyLMS.ViewModels
             SelectedUser = null;
             _isNewUser = false;
             ClearEditingFields();
+            Message = string.Empty;
         }
 
         private void NewUser()
@@ -154,6 +167,7 @@ namespace MyLMS.ViewModels
             SelectedUser = null;
             _isNewUser = true;
             ClearEditingFields();
+            Message = "Inserisci i dati del nuovo utente e premi Salva.";
         }
 
         private bool CanSave()
@@ -164,9 +178,15 @@ namespace MyLMS.ViewModels
 
         private void SaveUser()
         {
+            // Validazione semplice email
+            if (!Email.Contains("@"))
+            {
+                Message = "Email non valida (deve contenere '@').";
+                return;
+            }
+
             if (_isNewUser || SelectedUser == null)
             {
-                // Creazione nuovo utente
                 var user = new User
                 {
                     FullName = FullName,
@@ -179,14 +199,17 @@ namespace MyLMS.ViewModels
                 Users.Add(user);
                 SelectedUser = user;
                 _isNewUser = false;
+
+                Message = "Utente creato con successo.";
             }
             else
             {
-                // Modifica utente esistente
                 SelectedUser.FullName = FullName;
                 SelectedUser.Email = Email;
 
                 _context.SaveChanges();
+
+                Message = "Utente aggiornato correttamente.";
             }
         }
 
@@ -200,8 +223,16 @@ namespace MyLMS.ViewModels
             if (SelectedUser == null)
                 return;
 
-            // Attenzione: se l'utente ha prestiti collegati,
-            // potresti dover gestire il vincolo di FK (Loan.UserId).
+            // Controllo prestiti attivi prima di eliminare
+            bool hasActiveLoans = _context.Loans
+                .Any(l => l.UserId == SelectedUser.Id && l.ReturnDate == null);
+
+            if (hasActiveLoans)
+            {
+                Message = "Impossibile eliminare l'utente: ha prestiti attivi.";
+                return;
+            }
+
             _context.Users.Remove(SelectedUser);
             _context.SaveChanges();
 
@@ -209,6 +240,8 @@ namespace MyLMS.ViewModels
             SelectedUser = null;
             _isNewUser = false;
             ClearEditingFields();
+
+            Message = "Utente eliminato.";
         }
 
         private void ClearEditingFields()

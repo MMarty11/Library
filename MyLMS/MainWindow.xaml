@@ -4,51 +4,76 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyLMS"
-        xmlns:views="clr-namespace:MyLMS.Views"
+        xmlns:views="clr-namespace:MyLMS.MVVM.Views"
+        xmlns:viewModel="clr-namespace:MyLMS.ViewModels"
         mc:Ignorable="d"
-        Title="Gestione Biblioteca" Height="450" Width="800">
+        Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
 
-    <Grid>
-        <!-- Menu principale -->
-        <Grid x:Name="MainMenuPanel">
-            <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Width="300">
-                <TextBlock Text="Gestione Biblioteca"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,20"/>
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
+    <Border Background="#272537"
+            CornerRadius="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-                <Button Content="Aggiungi libro"
-                        Margin="0,0,0,10"
-                        Padding="10"
-                        Click="AddBookButton_Click"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                <Button Content="Cerca / Modifica libri"
-                        Margin="0,0,0,10"
-                        Padding="10"
-                        Click="SearchBookButton_Click"/>
+            <TextBlock Text="Library"
+                FontSize="24"
+                FontWeight="Bold"
+                Foreground="White"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="20,0,0,0"/>
 
-                <Button Content="Gestione utenti"
-                    Margin="0,0,0,10"
-                    Padding="10"
-                    Click="UsersButton_Click"/>
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Books"
+                    Margin="20,0,0,0"
+                    Foreground="White"
+                    Click="SearchBookButton_Click"
+                    Style="{StaticResource MenuButtonTheme}"/>
 
-                <Button Content="Prestiti"
-                        Margin="0,0,0,10"
-                        Padding="10"
-                        Click="LoansButton_Click"/>
+                <RadioButton Content="Users"
+                    Margin="20,0,0,0"
+                    Foreground="White"
+                    Click="UsersButton_Click"
+                    Style="{StaticResource MenuButtonTheme}"/>
 
-                <Button Content="Restituzione libri"
-                        Margin="0,0,0,10"
-                        Padding="10"
-                        Click="ReturnButton_Click"/>
+                <RadioButton Content="Loans"
+                    Margin="20,0,0,0"
+                    Foreground="White"
+                    Click="LoansButton_Click"
+                    Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
-        </Grid>
 
-        <!-- Area dove carico le altre view -->
-        <ContentControl x:Name="ContentArea"
-                        Visibility="Collapsed"/>
-    </Grid>
+            <TextBox Grid.Column="1" 
+                       Width="250"
+                       Height="40"
+                       VerticalContentAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="5"
+                       Style="{StaticResource ModernTextBox}"/>
+
+            <ContentControl Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10"
+                            Content="{Binding }">
+                
+                
+            </ContentControl>
+
+        </Grid>
+    </Border>
 </Window>

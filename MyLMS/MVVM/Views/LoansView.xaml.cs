@@ -10,19 +10,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyLMS.ViewModels;
+using MyLMS.MVVM.ViewModels;
 
-namespace MyLMS.Views
+namespace MyLMS.MVVM.Views
 {
     /// <summary>
     /// Logica di interazione per LoanView.xaml
     /// </summary>
-    public partial class LoanView : UserControl
+    public partial class LoansView : UserControl
     {
-        public LoanView()
+        public LoansView()
         {
             InitializeComponent();
-            DataContext = new LoanViewModel();
+            DataContext = new LoansViewModel();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

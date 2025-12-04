@@ -10,27 +10,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyLMS.ViewModels;
 
-namespace MyLMS.Views
+namespace MyLMS.MVVM.Views
 {
     /// <summary>
-    /// Logica di interazione per UserView.xaml
+    /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class UserView : UserControl
+    public partial class HomeView : UserControl
     {
-        public UserView()
+        public HomeView()
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Application.Current.MainWindow is MainWindow main)
-            {
-                main.ShowMainMenu();
-            }
         }
     }
 }

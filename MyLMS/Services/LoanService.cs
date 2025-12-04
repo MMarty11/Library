@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Biblioteca.Models;
+using MyLMS.MVVM.Models;
 using Microsoft.EntityFrameworkCore;
 using MyLMS.Data;
 
