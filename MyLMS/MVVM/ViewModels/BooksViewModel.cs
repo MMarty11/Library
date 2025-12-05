@@ -20,11 +20,11 @@ namespace MyLMS.MVVM.ViewModels
 
             Books = new ObservableCollection<Book>();
 
-            SearchCommand = new RelayCommand(SearchBooks);
+            /*SearchCommand = new RelayCommand(SearchBooks);
             LoadAllCommand = new RelayCommand(LoadAllBooks);
             NewBookCommand = new RelayCommand(NewBook, CanAdd);
             SaveCommand = new RelayCommand(SaveChanges, CanSave);
-            DeleteCommand = new RelayCommand(DeleteBook, CanDelete);
+            DeleteCommand = new RelayCommand(DeleteBook, CanDelete);*/
 
             Message = string.Empty;
 
@@ -67,8 +67,8 @@ namespace MyLMS.MVVM.ViewModels
                     Year = value.Year.ToString();
                 }
 
-                (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -80,8 +80,8 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _title = value;
                 OnPropertyChanged();
-                if(SelectedBook != null) (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (NewBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //if(SelectedBook != null) (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(NewBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -93,8 +93,8 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _author = value;
                 OnPropertyChanged();
-                if(SelectedBook != null) (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
-                (NewBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //if(SelectedBook != null) (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(NewBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 

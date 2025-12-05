@@ -30,7 +30,7 @@ namespace MyLMS.MVVM.Views
             // Chiama il metodo pubblico della MainWindow
             if (Application.Current.MainWindow is MainWindow main)
             {
-                main.ShowMainMenu();
+                //main.ShowMainMenu();
             }
         }
     }
