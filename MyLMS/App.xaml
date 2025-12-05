@@ -15,7 +15,19 @@
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView/>
             </DataTemplate>
-        
+
+            <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+                <view:BooksView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">
+                <view:UsersView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:LoansViewModel}">
+                <view:LoansView/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

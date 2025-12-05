@@ -22,9 +22,9 @@ namespace MyLMS.MVVM.ViewModels
             AvailableBooks = new ObservableCollection<Book>();
             ActiveLoans = new ObservableCollection<Loan>();
 
-            LoanBookCommand = new RelayCommand(LoanBook, CanLoanBook);
+           /* LoanBookCommand = new RelayCommand(LoanBook, CanLoanBook);
             ReturnBookCommand = new RelayCommand(ReturnBook, CanReturnBook);
-            RefreshCommand = new RelayCommand(LoadData);
+            RefreshCommand = new RelayCommand(LoadData);*/
 
             LoadData();
         }
@@ -56,7 +56,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _selectedLoan = value;
                 OnPropertyChanged();
-                (ReturnBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(ReturnBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _selectedUser = value;
                 OnPropertyChanged();
-                (LoanBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(LoanBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -80,7 +80,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _selectedAvailableBook = value;
                 OnPropertyChanged();
-                (LoanBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(LoanBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -92,7 +92,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _selectedActiveLoan = value;
                 OnPropertyChanged();
-                (ReturnBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(ReturnBookCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 

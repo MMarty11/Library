@@ -20,11 +20,11 @@ namespace MyLMS.MVVM.ViewModels
 
             Users = new ObservableCollection<User>();
 
-            LoadAllCommand = new RelayCommand(LoadAllUsers);
+            /*LoadAllCommand = new RelayCommand(LoadAllUsers);
             SearchCommand = new RelayCommand(SearchUsers);
             NewCommand = new RelayCommand(NewUser);
             SaveCommand = new RelayCommand(SaveUser, CanSave);
-            DeleteCommand = new RelayCommand(DeleteUser, CanDelete);
+            DeleteCommand = new RelayCommand(DeleteUser, CanDelete);*/
 
             Message = string.Empty;
 
@@ -79,7 +79,7 @@ namespace MyLMS.MVVM.ViewModels
                     ClearEditingFields();
                 }
 
-                (DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -93,7 +93,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _fullName = value;
                 OnPropertyChanged();
-                (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+               // (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -105,7 +105,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _email = value;
                 OnPropertyChanged();
-                (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                //(SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
