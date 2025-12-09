@@ -74,12 +74,12 @@
             </StackPanel>
 
             <TextBox Grid.Column="1" 
-                       Width="250"
+                       Width="350"
                        Height="40"
                        VerticalContentAlignment="Center"
                        HorizontalAlignment="Left"
                        Margin="5"
-                       Style="{StaticResource ModernTextBox}"/>
+                       Style="{StaticResource ModernTextBox_Search}"/>
 
             <ContentControl Grid.Row="1"
                             Grid.Column="1"

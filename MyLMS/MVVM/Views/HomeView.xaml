@@ -7,17 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="460" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock Text="Discover"
+        <TextBlock Text="Welcome to the library!"
                    Foreground="White"
                    FontSize="28"
                    HorizontalAlignment="left"
                    Margin="0,0,0,20"/>
-        
+
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,10">
             <Border Width="400"
                     Height="200">
-                
+
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Color="#5bc3ff" Offset="0.0"/>
@@ -33,15 +33,18 @@
 
                 <Grid>
                     <StackPanel>
-                        <TextBlock Text="Hello!"
-                                   Foreground="White"
-                                   FontSize="28"
-                                   Margin="20,10,10,0"/>
 
-                        <TextBlock Text="Have a good day!"
+                        <TextBlock TextWrapping="Wrap" Text="Reading is essential for those who seek to rise above the ordinary"
+                                   Foreground="White"
+                                   FontSize="24"
+                                   HorizontalAlignment="Left"
+                                   Margin="15,5,0,0"
+                                   Height="130" Width="218"/>
+
+                        <TextBlock Text="Jim Rohn"
                                    Foreground="White"
                                    FontSize="18"
-                                   Margin="20,10,10,0"/>
+                                   Margin="20,5,10,0"/>
                     </StackPanel>
 
                     <Image Width="218"
@@ -64,8 +67,14 @@
                     </LinearGradientBrush>
                 </Border.Background>
 
+                <TextBlock TextWrapping="Wrap" Text="News"
+                   Foreground="White"
+                   FontSize="24"
+                   HorizontalAlignment="Left"
+                   Margin="20,15,0,0" Width="76"/>
+
             </Border>
-                    
+
         </StackPanel>
 
         <StackPanel>
@@ -100,9 +109,9 @@
                         Background="#ecff4e"
                         CornerRadius="10"/>
             </StackPanel>
-            
+
         </StackPanel>
-        
-        
+
+
     </StackPanel>
 </UserControl>

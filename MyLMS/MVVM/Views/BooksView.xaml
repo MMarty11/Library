@@ -5,137 +5,133 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyLMS.MVVM.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="460" d:DesignWidth="800"
-             Background="#1B1B1B">
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- Riga per pulsante Indietro -->
-            <RowDefinition Height="Auto"/>
-            <!-- Barra ricerca -->
-            <RowDefinition Height="*"/>
-            <!-- Elenco libri -->
-            <RowDefinition Height="Auto"/>
-            <!-- Dettagli / Modifica / Nuovo -->
-            <RowDefinition Height="Auto"/>
-            <!-- Messaggio -->
-        </Grid.RowDefinitions>
+             d:DesignHeight="460" d:DesignWidth="800">
+    <Border CornerRadius="10" Background="#FF1D1C29">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>  <!-- Barra ricerca -->
+                <RowDefinition Height="*"/>  <!-- Elenco libri -->
+                <RowDefinition Height="Auto"/>  <!-- Dettagli / Modifica / Nuovo -->
+                <RowDefinition Height="Auto"/>  <!-- Messaggio -->
+            </Grid.RowDefinitions>
 
-        <!-- Pulsante Indietro -->
-        <Button Grid.Row="0"
-          Content="← Indietro"
-          HorizontalAlignment="Left"
-          Padding="10,2"
-          Margin="0,0,0,10"
-          Click="BackButton_Click"/>
-
-        <!-- Barra di ricerca -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Cerca:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <TextBox Width="250"
+            <!-- Barra di ricerca -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox Width="350"
+                     Margin="5"
+                     Style="{StaticResource ModernTextBox_Search}"
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Cerca"
+                <Button Content="Search"
                     Margin="10,0,0,0"
-                    Padding="10,2"
+                    Style="{StaticResource ModernButton}"
                     Command="{Binding SearchCommand}" />
-            <Button Content="Mostra tutti"
+                <Button Content="Reset"
                     Margin="10,0,0,0"
-                    Padding="10,2"
+                    Style="{StaticResource ModernButton}"
                     Command="{Binding LoadAllCommand}" />
-        </StackPanel>
+            </StackPanel>
 
-        <!-- Elenco libri -->
-        <DataGrid Grid.Row="2"
+
+            <!-- Elenco libri -->
+            <DataGrid Grid.Row="1"
                   ItemsSource="{Binding Books}"
                   SelectedItem="{Binding SelectedBook}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   CanUserAddRows="False"
-                  Margin="0,0,0,10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Titolo" Binding="{Binding Title}" Width="2*"/>
-                <DataGridTextColumn Header="Autore" Binding="{Binding Author}" Width="2*"/>
-                <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="*"/>
-                <DataGridTextColumn Header="Anno" Binding="{Binding Year}" Width="Auto"/>
-                <DataGridCheckBoxColumn Header="Disponibile"
+                  Margin="0,0,0,10"
+                  Style="{StaticResource ModernDataGrid}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="2*"/>
+                    <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="2*"/>
+                    <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="*"/>
+                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Available"
                                         Binding="{Binding IsAvailable}"
-                                        Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!-- Dettagli / Modifica / Nuovo libro -->
-        <GroupBox Grid.Row="3" Header="Dettagli libro">
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <!-- Dettagli / Modifica / Nuovo libro -->
+            <GroupBox Grid.Row="2" Grid.ColumnSpan="3" Header="Book details:" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0.7">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="43.677"/>
+                        <ColumnDefinition Width="271*"/>
+                        <ColumnDefinition Width="48*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="319*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Titolo -->
-                <TextBlock Text="Titolo:" Grid.Row="0" Grid.Column="0"
-                           VerticalAlignment="Center" Margin="0,0,5,5"/>
-                <TextBox Grid.Row="0" Grid.Column="1"
+                    <!-- Titolo -->
+                    <TextBlock Text="Title:" Grid.Row="0" Grid.Column="0"
+                           Foreground="White" VerticalAlignment="Top" Margin="0,5,5,0" />
+                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
+                         Style="{StaticResource ModernTextBox}"
                          Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,10,5"/>
+                         Margin="10,0,0,5"/>
 
-                <!-- Autore -->
-                <TextBlock Text="Autore:" Grid.Row="1" Grid.Column="0"
-                           VerticalAlignment="Center" Margin="0,0,5,5"/>
-                <TextBox Grid.Row="1" Grid.Column="1"
+                    <!-- Autore -->
+                    <TextBlock Text="Author:" Grid.Row="1" Grid.Column="0"
+                           Foreground="White" VerticalAlignment="Top" Margin="0,5,5,0"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"
+                         Style="{StaticResource ModernTextBox}"
                          Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,10,5"/>
+                         Margin="10,0,0,5"/>
 
-                <!-- ISBN -->
-                <TextBlock Text="ISBN:" Grid.Row="0" Grid.Column="2"
-                           VerticalAlignment="Center" Margin="10,0,5,5"/>
-                <TextBox Grid.Row="0" Grid.Column="3"
+                    <!-- ISBN -->
+                    <TextBlock Text="ISBN:" Grid.Row="0" Grid.Column="3"
+                           Foreground="White" VerticalAlignment="Top" Margin="10,5,5,0"/>
+                    <TextBox Grid.Row="0" Grid.Column="4" HorizontalAlignment="Left"
+                         Style="{StaticResource ModernTextBox}"
                          Text="{Binding Isbn, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,0,5"/>
+                         Margin="10,0,0,5"/>
 
-                <!-- Anno -->
-                <TextBlock Text="Anno:" Grid.Row="1" Grid.Column="2"
-                           VerticalAlignment="Center" Margin="10,0,5,5"/>
-                <TextBox Grid.Row="1" Grid.Column="3"
+                    <!-- Anno -->
+                    <TextBlock Text="Year:" Grid.Row="1" Grid.Column="3"
+                           Foreground="White" VerticalAlignment="Top" Margin="10,5,5,0"/>
+                    <TextBox Grid.Row="1" Grid.Column="4" HorizontalAlignment="Left"
+                         Style="{StaticResource ModernTextBox}"
                          Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,0,5"/>
+                         Margin="10,0,0,5"/>
 
-                <!-- Disponibile -->
-                <!--<CheckBox Grid.Row="2" Grid.Column="1"
+                    <!-- Disponibile -->
+                    <!--<CheckBox Grid.Row="2" Grid.Column="1"
                           Content="Disponibile"
                           IsChecked="{Binding SelectedBook.IsAvailable}"
                           Margin="0,5,0,5"/>-->
 
-                <!-- Pulsanti azione -->
-                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                    <!-- Pulsanti azione -->
+                    <StackPanel Grid.Row="2" Grid.Column="4"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             Margin="0,10,0,0">
-                    <Button Content="Nuovo"
+                        <Button Content="New"
                             Margin="0,0,10,0"
-                            Padding="10,2"
+                            Style="{StaticResource ModernButton}"
                             Command="{Binding NewBookCommand}"/>
-                    <Button Content="Elimina"
+                        <Button Content="Delete"
                             Margin="0,0,10,0"
-                            Padding="10,2"
+                            Style="{StaticResource ModernButton}"
                             Command="{Binding DeleteCommand}"/>
-                    <Button Content="Salva"
-                            Padding="10,2"
+                        <Button Content="Save"
+                            Style="{StaticResource ModernButton}"
                             Command="{Binding SaveCommand}"/>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
 
-        <!-- Messaggio -->
-        <TextBlock Grid.Row="4"
+            <!-- Messaggio -->
+            <TextBlock Grid.Row="3"
                    Text="{Binding Message}"
                    Foreground="Red"
-                   Margin="0,5,0,0"/>
-    </Grid>
+                   Margin="0,5,0,0" Grid.ColumnSpan="3"/>
+        </Grid>
+    </Border>
 </UserControl>
