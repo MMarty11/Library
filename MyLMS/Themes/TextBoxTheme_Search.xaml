@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type TextBox}"
-           x:Key="ModernTextBox">
+           x:Key="ModernTextBox_Search">
 
         <!-- Rimuovi le dimensioni hardcoded per rendere lo stile flessibile -->
         <Setter Property="Width" Value="200"/>
-        <Setter Property="Height" Value="25"/>
+        <Setter Property="Height" Value="35"/>
         <Setter Property="Background" Value="#353340"/>
         <Setter Property="Foreground" Value="#CFCFCF"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -34,31 +34,31 @@
                                 IsReadOnly="{TemplateBinding IsReadOnly}"
                                      IsEnabled="{TemplateBinding IsEnabled}"/>
 
-                                <!-- Placeholder TextBlock (aggiunto il testo di esempio e migliorati i trigger) -->
-                                <TextBlock IsHitTestVisible="False"
+                            <!-- Placeholder TextBlock (aggiunto il testo di esempio e migliorati i trigger) -->
+                            <TextBlock IsHitTestVisible="False"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
                                        Margin="10,0,0,0"
                                        FontSize="14"
                                        Foreground="DarkGray"
-                                       Text="">
+                                       Text="Search... ">
 
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <!-- Nascondi il placeholder quando la TextBox interna ha del testo o ha il focus -->
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Text, ElementName=SearchBox}" Value=""/>
-                                                        <Condition Binding="{Binding IsFocused, ElementName=SearchBox}" Value="False"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <!-- Nascondi il placeholder quando la TextBox interna ha del testo o ha il focus -->
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Text, ElementName=SearchBox}" Value=""/>
+                                                    <Condition Binding="{Binding IsFocused, ElementName=SearchBox}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
                     </Border>
 

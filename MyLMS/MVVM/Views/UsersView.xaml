@@ -7,119 +7,111 @@
              mc:Ignorable="d" 
              d:DesignHeight="460" d:DesignWidth="800">
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- Indietro -->
-            <RowDefinition Height="Auto"/>
-            <!-- Ricerca -->
-            <RowDefinition Height="*"/>
-            <!-- Lista utenti -->
-            <RowDefinition Height="Auto"/>
-            <!-- Dettagli / Azioni -->
-            <RowDefinition Height="Auto"/>
-            <!-- Messaggio -->
-        </Grid.RowDefinitions>
+    <Border CornerRadius="10" Background="#FF1D1C29">
 
-        <!-- Pulsante Indietro -->
-        <Button Grid.Row="0"
-                Content="← Indietro"
-                HorizontalAlignment="Left"
-                Padding="10,2"
-                Margin="0,0,0,10"
-                Click="BackButton_Click"/>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>  <!-- Ricerca -->
+                <RowDefinition Height="*"/>  <!-- Lista utenti -->
+                <RowDefinition Height="Auto"/>  <!-- Dettagli / Azioni -->
+                <RowDefinition Height="Auto"/>  <!-- Messaggio -->
+            </Grid.RowDefinitions>
 
-        <!-- Barra di ricerca -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Cerca utente:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,5,0"/>
-            <TextBox Width="250"
+            <!-- Barra di ricerca -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                 <TextBox Width="350" Margin="5"
+                     Style="{StaticResource ModernTextBox_Search}"
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Cerca"
+                <Button Content="Search"
                     Margin="10,0,0,0"
                     Padding="10,2"
+                    Style="{StaticResource ModernButton}"
                     Command="{Binding SearchCommand}" />
-            <Button Content="Mostra tutti"
+                <Button Content="Reset"
                     Margin="10,0,0,0"
                     Padding="10,2"
+                    Style="{StaticResource ModernButton}"
                     Command="{Binding LoadAllCommand}" />
-        </StackPanel>
+            </StackPanel>
 
-        <!-- Elenco utenti -->
-        <DataGrid Grid.Row="2"
+            <!-- Elenco utenti -->
+            <DataGrid Grid.Row="1"
                   ItemsSource="{Binding Users}"
                   SelectedItem="{Binding SelectedUser}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   IsReadOnly="True"
-                  Margin="0,0,0,10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Nome completo"
+                  Margin="0,0,0,10"
+                  Style="{StaticResource ModernDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Full name"
                                     Binding="{Binding FullName}"
                                     Width="2*"/>
-                <DataGridTextColumn Header="Email"
+                    <DataGridTextColumn Header="Email"
                                     Binding="{Binding Email}"
                                     Width="2*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!-- Dettagli utente selezionato / nuovo utente -->
-        <GroupBox Grid.Row="3" Header="Dettagli utente">
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <!-- Dettagli utente selezionato / nuovo utente -->
+            <GroupBox Grid.Row="2" Header="User details" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0.7">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Nome completo -->
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Nome completo:"
+                    <!-- Nome completo -->
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Full name:"
                            VerticalAlignment="Center"
                            Margin="0,0,5,5"/>
-                <TextBox Grid.Row="0" Grid.Column="1"
+                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="350"
+                         Style="{StaticResource ModernTextBox}"
                          Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,10,5"/>
+                         Margin="10,0,0,5"/>
 
-                <!-- Email -->
-                <TextBlock Grid.Row="1" Grid.Column="0"
+                    <!-- Email -->
+                    <TextBlock Grid.Row="1" Grid.Column="0"
                            Text="Email:"
                            VerticalAlignment="Center"
                            Margin="0,0,5,5"/>
-                <TextBox Grid.Row="1" Grid.Column="1"
+                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="350"
+                         Style="{StaticResource ModernTextBox}"
                          Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,10,5"/>
+                         Margin="10,0,0,5"/>
 
-                <!-- Pulsanti azione -->
-                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                    <!-- Pulsanti azione -->
+                    <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             Margin="0,10,0,0">
-                    <Button Content="Nuovo"
+                        <Button Content="New"
                             Margin="0,0,10,0"
-                            Padding="10,2"
+                            Style="{StaticResource ModernButton}"
                             Command="{Binding NewCommand}"/>
-                    <Button Content="Elimina"
+                        <Button Content="Delete"
                             Margin="0,0,10,0"
-                            Padding="10,2"
+                            Style="{StaticResource ModernButton}"
                             Command="{Binding DeleteCommand}"/>
-                    <Button Content="Salva"
-                            Padding="10,2"
+                        <Button Content="Save"
+                            Style="{StaticResource ModernButton}"
                             Command="{Binding SaveCommand}"/>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
-        
-        <!-- Messaggio -->
-        <TextBlock Grid.Row="4"
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <!-- Messaggio -->
+            <TextBlock Grid.Row="3"
                    Text="{Binding Message}"
                    Foreground="Red"
                    Margin="0,5,0,0"/>
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

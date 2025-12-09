@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type Button}" x:Key="ModernButton">
+        <Setter Property="Background" Value="#353340"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="80"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <!-- 1. Il Background ora è qui, sul Border -->
+                    <Border x:Name="buttonBorder" 
+                            CornerRadius="10"
+                            Background="{TemplateBinding Background}">
+                        <!-- 2. Il Grid non ha più un suo background -->
+                        <Grid>
+                            <!-- 3. Il TextBlock eredita il Foreground dal bottone -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Aggiungiamo i trigger visivi qui dentro, nel template -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <!-- Cambia il colore del Bordo quando il mouse è sopra -->
+                            <Setter TargetName="buttonBorder" Property="Background" Value="#555360"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <!-- Cambia il colore quando il bottone è premuto -->
+                            <Setter TargetName="buttonBorder" Property="Background" Value="#252330"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <!-- Stile per il bottone disabilitato -->
+                            <Setter TargetName="buttonBorder" Property="Background" Value="#2A2A2A"/>
+                            <Setter Property="Foreground" Value="#666666"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -25,13 +25,5 @@ namespace MyLMS.MVVM.Views
             DataContext = new BooksViewModel();
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Chiama il metodo pubblico della MainWindow
-            if (Application.Current.MainWindow is MainWindow main)
-            {
-                //main.ShowMainMenu();
-            }
-        }
     }
 }

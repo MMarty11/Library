@@ -20,11 +20,11 @@ namespace MyLMS.MVVM.ViewModels
 
             Users = new ObservableCollection<User>();
 
-            /*LoadAllCommand = new RelayCommand(LoadAllUsers);
+            LoadAllCommand = new RelayCommand(LoadAllUsers);
             SearchCommand = new RelayCommand(SearchUsers);
-            NewCommand = new RelayCommand(NewUser);
+            NewCommand = new RelayCommand(NewUser, CanAdd);
             SaveCommand = new RelayCommand(SaveUser, CanSave);
-            DeleteCommand = new RelayCommand(DeleteUser, CanDelete);*/
+            DeleteCommand = new RelayCommand(DeleteUser, CanDelete);
 
             Message = string.Empty;
 
@@ -79,7 +79,8 @@ namespace MyLMS.MVVM.ViewModels
                     ClearEditingFields();
                 }
 
-                //(DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                (DeleteCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -93,7 +94,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _fullName = value;
                 OnPropertyChanged();
-               // (SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                (NewCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -105,7 +106,7 @@ namespace MyLMS.MVVM.ViewModels
             {
                 _email = value;
                 OnPropertyChanged();
-                //(SaveCommand as RelayCommand)?.RaiseCanExecuteChanged();
+                (NewCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -160,20 +161,41 @@ namespace MyLMS.MVVM.ViewModels
             ClearEditingFields();
             Message = string.Empty;
         }
+        private bool CanAdd()
+        {
+            return !string.IsNullOrWhiteSpace(FullName)
+                && !string.IsNullOrWhiteSpace(Email);
+        }
 
         private void NewUser()
         {
-            // Modalità "nuovo utente"
-            SelectedUser = null;
-            _isNewUser = true;
-            ClearEditingFields();
-            Message = "Inserisci i dati del nuovo utente e premi Salva.";
+            if (!Email.Contains("@"))
+            {
+                Message = "Email non valida (deve contenere '@')";
+                return;
+            }
+            else
+            {
+                ClearEditingFields();
+                Message = "Nuovo utente aggiunto con successo!";
+
+                var user = new User
+                {
+                    FullName = FullName,
+                    Email = Email
+                };
+
+                _context.Users.Add(user);
+                Users.Add(user);
+                SelectedUser = user;
+            }
         }
 
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(FullName)
-                && !string.IsNullOrWhiteSpace(Email);
+                && !string.IsNullOrWhiteSpace(Email)
+                && (SelectedUser != null);
         }
 
         private void SaveUser()
@@ -181,7 +203,7 @@ namespace MyLMS.MVVM.ViewModels
             // Validazione semplice email
             if (!Email.Contains("@"))
             {
-                Message = "Email non valida (deve contenere '@').";
+                Message = "Email non valida (deve contenere '@')";
                 return;
             }
 
@@ -200,7 +222,7 @@ namespace MyLMS.MVVM.ViewModels
                 SelectedUser = user;
                 _isNewUser = false;
 
-                Message = "Utente creato con successo.";
+                Message = "Utente creato con successo";
             }
             else
             {
@@ -209,7 +231,7 @@ namespace MyLMS.MVVM.ViewModels
 
                 _context.SaveChanges();
 
-                Message = "Utente aggiornato correttamente.";
+                Message = "Utente aggiornato correttamente";
             }
         }
 

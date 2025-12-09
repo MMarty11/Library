@@ -24,14 +24,5 @@ namespace MyLMS.MVVM.Views
             InitializeComponent();
             DataContext = new LoansViewModel();
         }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Chiama il metodo pubblico della MainWindow
-            if (Application.Current.MainWindow is MainWindow main)
-            {
-                //main.ShowMainMenu();
-            }
-        }
     }
 }

@@ -25,12 +25,5 @@ namespace MyLMS.MVVM.Views
             DataContext = new UsersViewModel();
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Application.Current.MainWindow is MainWindow main)
-            {
-                //main.ShowMainMenu();
-            }
-        }
     }
 }
