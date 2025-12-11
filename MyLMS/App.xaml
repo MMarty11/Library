@@ -15,6 +15,13 @@
                 <ResourceDictionary Source="/Themes/DataGridTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <Style TargetType="{x:Type Control}">
+                <!-- Applica a tutti i controlli che ereditano da Control -->
+                <Setter Property="FontFamily" Value="Fonts/#myFont"/>
+                <!-- O il nome del tuo font, es: "Segoe UI" o "Comic Sans MS" -->
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView/>
             </DataTemplate>

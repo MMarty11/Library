@@ -8,10 +8,11 @@
         xmlns:viewModel="clr-namespace:MyLMS.MVVM.ViewModels"
         mc:Ignorable="d"
         Height="600" Width="920"
-        WindowStyle="None"
-        ResizeMode="NoResize"
         Background="Transparent"
-        AllowsTransparency="True">
+        >
+        <!--AllowsTransparency="True"
+    WindowStyle="None"
+        ResizeMode="NoResize"-->
 
     <Window.DataContext>
         <viewModel:MainViewModel/>
@@ -26,12 +27,13 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="Library"
-                FontSize="24"
+                FontFamily="Fonts/#Sunlight Dreams"
+                FontSize="34"
                 FontWeight="Bold"
                 Foreground="White"
                 HorizontalAlignment="Left"
@@ -73,13 +75,19 @@
                     Command="{Binding LoansViewCommand}"/>
             </StackPanel>
 
-            <TextBox Grid.Column="1" 
+            <Image Grid.Column="1" Visibility="Visible"
+                   Height="150"
+                   Source="/Images/books_menu3.png"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top" Margin="0,-70,0,0"/>
+
+            <!--<TextBox Grid.Column="1" 
                        Width="350"
                        Height="40"
                        VerticalContentAlignment="Center"
                        HorizontalAlignment="Left"
                        Margin="5"
-                       Style="{StaticResource ModernTextBox_Search}"/>
+                       Style="{StaticResource ModernTextBox_Search}"/>-->
 
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
