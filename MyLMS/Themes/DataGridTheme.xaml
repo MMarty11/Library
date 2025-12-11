@@ -63,6 +63,8 @@
         <Setter Property="BorderBrush" Value="{StaticResource DataGrid.GridLines}"/>
         <Setter Property="BorderThickness" Value="0,0,1,1"/>
         <Setter Property="Padding" Value="12,8,12,8"/>
+
+        <Setter Property="FontFamily" Value="Baskerville Old Face"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -190,6 +192,7 @@
     <Style x:Key="ModernDataGrid" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="{StaticResource DataGrid.Background}"/>
         <Setter Property="Foreground" Value="{StaticResource DataGrid.Foreground}"/>
+        <Setter Property="FontFamily" Value="Baskerville Old Face"/>
         <Setter Property="BorderBrush" Value="{StaticResource DataGrid.GridLines}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="RowBackground" Value="{StaticResource DataGrid.Row.Background}"/>

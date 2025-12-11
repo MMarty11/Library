@@ -25,13 +25,14 @@
                             <!-- TextBox interna con binding TwoWay verso il padre -->
                             <TextBox x:Name="SearchBox"
                                      Margin="1"
+                                     FontFamily="Baskerville Old Face"
                                      Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      Padding="{TemplateBinding Padding}"
                                      Foreground="{TemplateBinding Foreground}"
-                                IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
                                      IsEnabled="{TemplateBinding IsEnabled}"/>
 
                             <!-- Placeholder TextBlock (aggiunto il testo di esempio e migliorati i trigger) -->
@@ -40,6 +41,7 @@
                                        HorizontalAlignment="Left"
                                        Margin="10,0,0,0"
                                        FontSize="14"
+                                       FontFamily="Baskerville Old Face"
                                        Foreground="DarkGray"
                                        Text="Search... ">
 

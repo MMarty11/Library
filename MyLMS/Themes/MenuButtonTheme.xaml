@@ -13,7 +13,7 @@
 
                             <TextBlock Text="{TemplateBinding Property=Content}"
                                        VerticalAlignment="Center"
-                                       Margin="20,0,0,0"/>
+                                       Margin="20,0,0,0" FontFamily="Baskerville Old Face"/>
 
 
                         </Grid>
@@ -28,6 +28,10 @@
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="#22202f"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!-- Cambia il colore del Bordo quando il mouse è sopra -->
+                <Setter Property="Background" Value="#555360"/>
             </Trigger>
         </Style.Triggers>
 

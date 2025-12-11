@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using MyLMS.MVVM.Models;
-using MyLMS.Data;
+using Microsoft.EntityFrameworkCore;
 using MyLMS.Core;
+using MyLMS.Data;
+using MyLMS.MVVM.Models;
 
 namespace MyLMS.MVVM.ViewModels
 {
     internal class UsersViewModel : BaseViewModel
     {
         private readonly LibraryContext _context;
-        private bool _isNewUser = false;
 
         public UsersViewModel()
         {
@@ -44,6 +44,13 @@ namespace MyLMS.MVVM.ViewModels
             set { _message = value; OnPropertyChanged(); }
         }
 
+        private string _messageColor = string.Empty;
+        public string MessageColor
+        {
+            get => _messageColor;
+            set { _messageColor = value; OnPropertyChanged(); }
+        }
+
         // --------- Ricerca ---------
 
         private string _searchText = string.Empty;
@@ -68,11 +75,10 @@ namespace MyLMS.MVVM.ViewModels
                 _selectedUser = value;
                 OnPropertyChanged();
 
-                if (_selectedUser != null)
+                if (value != null)
                 {
-                    _isNewUser = false;
-                    FullName = _selectedUser.FullName;
-                    Email = _selectedUser.Email;
+                    FullName = value.FullName;
+                    Email = value.Email;
                 }
                 else
                 {
@@ -132,7 +138,6 @@ namespace MyLMS.MVVM.ViewModels
 
             // reset form
             SelectedUser = null;
-            _isNewUser = false;
             ClearEditingFields();
             Message = string.Empty;
         }
@@ -157,8 +162,8 @@ namespace MyLMS.MVVM.ViewModels
                 Users.Add(u);
 
             SelectedUser = null;
-            _isNewUser = false;
-            ClearEditingFields();
+            //_isNewUser = false;
+            //ClearEditingFields();
             Message = string.Empty;
         }
         private bool CanAdd()
@@ -171,14 +176,12 @@ namespace MyLMS.MVVM.ViewModels
         {
             if (!Email.Contains("@"))
             {
+                MessageColor = "Red";
                 Message = "Email non valida (deve contenere '@')";
                 return;
             }
             else
             {
-                ClearEditingFields();
-                Message = "Nuovo utente aggiunto con successo!";
-
                 var user = new User
                 {
                     FullName = FullName,
@@ -188,6 +191,12 @@ namespace MyLMS.MVVM.ViewModels
                 _context.Users.Add(user);
                 Users.Add(user);
                 SelectedUser = user;
+
+                _context.SaveChanges();
+
+                ClearEditingFields();
+                MessageColor = "Green";
+                Message = "Nuovo utente aggiunto con successo!";
             }
         }
 
@@ -200,38 +209,32 @@ namespace MyLMS.MVVM.ViewModels
 
         private void SaveUser()
         {
+            if (SelectedUser == null)
+                return;
+
             // Validazione semplice email
             if (!Email.Contains("@"))
             {
+                MessageColor = "Red";
                 Message = "Email non valida (deve contenere '@')";
                 return;
             }
 
-            if (_isNewUser || SelectedUser == null)
-            {
-                var user = new User
-                {
-                    FullName = FullName,
-                    Email = Email
-                };
-
-                _context.Users.Add(user);
-                _context.SaveChanges();
-
-                Users.Add(user);
-                SelectedUser = user;
-                _isNewUser = false;
-
-                Message = "Utente creato con successo";
-            }
-            else
-            {
+            try {
                 SelectedUser.FullName = FullName;
                 SelectedUser.Email = Email;
 
                 _context.SaveChanges();
 
+                MessageColor = "Green";
                 Message = "Utente aggiornato correttamente";
+
+                LoadAllUsers();
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageColor = "Red";
+                Message = "Errore nel salvataggio: " + ex.Message;
             }
         }
 
@@ -251,7 +254,8 @@ namespace MyLMS.MVVM.ViewModels
 
             if (hasActiveLoans)
             {
-                Message = "Impossibile eliminare l'utente: ha prestiti attivi.";
+                MessageColor = "Red";
+                Message = "Impossibile eliminare l'utente: ha prestiti attivi";
                 return;
             }
 
@@ -260,14 +264,16 @@ namespace MyLMS.MVVM.ViewModels
 
             Users.Remove(SelectedUser);
             SelectedUser = null;
-            _isNewUser = false;
             ClearEditingFields();
 
-            Message = "Utente eliminato.";
+            MessageColor = "Green";
+            Message = "Utente eliminato";
         }
 
         private void ClearEditingFields()
         {
+            SearchText = string.Empty;
+
             FullName = string.Empty;
             Email = string.Empty;
         }

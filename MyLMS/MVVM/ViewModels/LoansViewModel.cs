@@ -26,6 +26,8 @@ namespace MyLMS.MVVM.ViewModels
             ReturnBookCommand = new RelayCommand(ReturnBook, CanReturnBook);
             RefreshCommand = new RelayCommand(LoadData);
 
+            Message = string.Empty;
+
             LoadData();
         }
 
@@ -34,6 +36,22 @@ namespace MyLMS.MVVM.ViewModels
         public ObservableCollection<User> Users { get; }
         public ObservableCollection<Book> AvailableBooks { get; }
         public ObservableCollection<Loan> ActiveLoans { get; }
+
+        // --------- Messaggi utente ---------
+
+        private string _message = string.Empty;
+        public string Message
+        {
+            get => _message;
+            set { _message = value; OnPropertyChanged(); }
+        }
+
+        private string _messageColor = string.Empty;
+        public string MessageColor
+        {
+            get => _messageColor;
+            set { _messageColor = value; OnPropertyChanged(); }
+        }
 
         // --------- Selezioni correnti ---------
 

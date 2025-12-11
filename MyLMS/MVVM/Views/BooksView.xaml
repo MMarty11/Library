@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:MyLMS.MVVM.Views"
              mc:Ignorable="d" 
              d:DesignHeight="460" d:DesignWidth="800">
-    <Border CornerRadius="10" Background="#FF1D1C29">
-        <Grid Margin="20">
+    
+    <Border CornerRadius="10">
+        <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>  <!-- Barra ricerca -->
                 <RowDefinition Height="*"/>  <!-- Elenco libri -->
@@ -54,7 +55,7 @@
             </DataGrid>
 
             <!-- Dettagli / Modifica / Nuovo libro -->
-            <GroupBox Grid.Row="2" Grid.ColumnSpan="3" Header="Book details:" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0.7">
+            <GroupBox Grid.Row="2" Grid.ColumnSpan="3" Header="Book details:" Foreground="White" FontFamily="Baskerville Old Face" BorderBrush="{x:Null}" BorderThickness="0.7">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="43.677"/>
@@ -71,7 +72,7 @@
 
                     <!-- Titolo -->
                     <TextBlock Text="Title:" Grid.Row="0" Grid.Column="0"
-                           Foreground="White" VerticalAlignment="Top" Margin="0,5,5,0" />
+                           Foreground="White" FontFamily="Baskerville Old Face" VerticalAlignment="Top" Margin="0,5,5,0" />
                     <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
                          Style="{StaticResource ModernTextBox}"
                          Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
@@ -79,7 +80,7 @@
 
                     <!-- Autore -->
                     <TextBlock Text="Author:" Grid.Row="1" Grid.Column="0"
-                           Foreground="White" VerticalAlignment="Top" Margin="0,5,5,0"/>
+                           Foreground="White" FontFamily="Baskerville Old Face" VerticalAlignment="Top" Margin="0,5,5,0"/>
                     <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"
                          Style="{StaticResource ModernTextBox}"
                          Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"
@@ -87,7 +88,7 @@
 
                     <!-- ISBN -->
                     <TextBlock Text="ISBN:" Grid.Row="0" Grid.Column="3"
-                           Foreground="White" VerticalAlignment="Top" Margin="10,5,5,0"/>
+                           Foreground="White" FontFamily="Baskerville Old Face" VerticalAlignment="Top" Margin="10,5,5,0"/>
                     <TextBox Grid.Row="0" Grid.Column="4" HorizontalAlignment="Left"
                          Style="{StaticResource ModernTextBox}"
                          Text="{Binding Isbn, UpdateSourceTrigger=PropertyChanged}"
@@ -100,12 +101,6 @@
                          Style="{StaticResource ModernTextBox}"
                          Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}"
                          Margin="10,0,0,5"/>
-
-                    <!-- Disponibile -->
-                    <!--<CheckBox Grid.Row="2" Grid.Column="1"
-                          Content="Disponibile"
-                          IsChecked="{Binding SelectedBook.IsAvailable}"
-                          Margin="0,5,0,5"/>-->
 
                     <!-- Pulsanti azione -->
                     <StackPanel Grid.Row="2" Grid.Column="4"
@@ -128,9 +123,9 @@
             </GroupBox>
 
             <!-- Messaggio -->
-            <TextBlock Grid.Row="3"
+            <TextBlock x:Name="tbMessage" Grid.Row="3"
                    Text="{Binding Message}"
-                   Foreground="Red"
+                   Foreground="{Binding MessageColor}"
                    Margin="0,5,0,0" Grid.ColumnSpan="3"/>
         </Grid>
     </Border>

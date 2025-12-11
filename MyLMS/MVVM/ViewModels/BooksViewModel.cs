@@ -119,6 +119,12 @@ namespace MyLMS.MVVM.ViewModels
             set { _message = value; OnPropertyChanged(); }
         }
 
+        private string _messageColor = string.Empty;
+        public string MessageColor
+        {
+            get => _messageColor;
+            set { _messageColor = value; OnPropertyChanged(); }
+        }
 
         // --------- Comandi ---------
 
@@ -133,10 +139,7 @@ namespace MyLMS.MVVM.ViewModels
 
         private void LoadAllBooks()
         {
-            Title = string.Empty;
-            Author = string.Empty;
-            Year = string.Empty;
-            Isbn = string.Empty;
+            ClearEditingFields();
 
             Books.Clear();
 
@@ -182,9 +185,6 @@ namespace MyLMS.MVVM.ViewModels
 
         private void NewBook()
         {
-            ClearEditingFields();
-            Message = "Nuovo libro aggiunto con successo!";
-
             int parsedYear = 0;
             if (!string.IsNullOrWhiteSpace(Year))
             {
@@ -205,14 +205,16 @@ namespace MyLMS.MVVM.ViewModels
             _context.Books.Add(book); // EF lo traccia come Added
             Books.Add(book);
             SelectedBook = book;
+
+            _context.SaveChanges();
+
+            ClearEditingFields();
+            MessageColor = "Green";
+            Message = "Nuovo libro aggiunto con successo!";
         }
 
         private bool CanSave() => SelectedBook != null;
-        /*private bool CanSave()
-        {
-            return !string.IsNullOrWhiteSpace(Title)
-                && !string.IsNullOrWhiteSpace(Author);
-        }*/
+
 
         private void SaveChanges()
         {
@@ -220,28 +222,40 @@ namespace MyLMS.MVVM.ViewModels
                 return;
 
             // Validazione minima
-            if (string.IsNullOrWhiteSpace(SelectedBook.Title) ||
-                string.IsNullOrWhiteSpace(SelectedBook.Author))
+            if (string.IsNullOrWhiteSpace(Title) ||
+                string.IsNullOrWhiteSpace(Author))
             {
-                Message = "Titolo e Autore sono obbligatori.";
+                MessageColor = "Red";
+                Message = "Titolo e Autore sono obbligatori";
                 return;
             }
 
-            bool isNew = SelectedBook.Id == 0; // se 0, verrà creato al SaveChanges
-
             try
             {
+                // Copio i valori nelle proprietà dell'entità tracciata da EF
+                SelectedBook.Title = Title;
+                SelectedBook.Author = Author;
+                SelectedBook.Isbn = Isbn;
+
+                int parsedYear = 0;
+                if (!string.IsNullOrWhiteSpace(Year) && !int.TryParse(Year, out parsedYear))
+                {
+                    MessageColor = "Red";
+                    Message = "L'anno deve essere un numero intero.";
+                    return;
+                }
+                SelectedBook.Year = parsedYear;
+
                 _context.SaveChanges();
 
-                Message = isNew
-                    ? "Libro aggiunto correttamente."
-                    : "Libro aggiornato correttamente.";
+                MessageColor = "Green";
+                Message = "Libro aggiornato correttamente";
 
-                // ricarico i risultati secondo il filtro corrente
                 SearchBooks();
             }
             catch (DbUpdateException ex)
             {
+                MessageColor = "Red";
                 Message = "Errore nel salvataggio: " + ex.Message;
             }
         }
@@ -259,7 +273,8 @@ namespace MyLMS.MVVM.ViewModels
 
             if (hasActiveLoans)
             {
-                Message = "Impossibile eliminare il libro: ha prestiti attivi.";
+                MessageColor = "Red";
+                Message = "Impossibile eliminare il libro: ha prestiti attivi";
                 return;
             }
 
@@ -268,11 +283,13 @@ namespace MyLMS.MVVM.ViewModels
 
             Books.Remove(SelectedBook);
             SelectedBook = null;
-            Message = "Libro eliminato.";
+            MessageColor = "Green";
+            Message = "Libro eliminato";
         }
 
         private void ClearEditingFields()
         {
+            SearchText = string.Empty;
             Title = string.Empty;
             Author = string.Empty;
             Isbn = string.Empty;
