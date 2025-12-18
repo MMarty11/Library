@@ -27,9 +27,7 @@ Whether you use this project, have learned something from it, or just like it, p
 - Switch between light and dark mode
 - Other awesome features yet to be implemented
 
-![User Features](http://i.imgur.com/WbF1fi2.png)
-
-![Admin Features](http://i.imgur.com/xQFaadt.png)
+![Features]()
 
 ---
 
